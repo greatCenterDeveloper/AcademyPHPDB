@@ -14,14 +14,11 @@
     if($result) {
         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
         $authority = $row['authority'];
-        echo "진입1 : " . $authority;
 
         if($authority == 'teacher') {
             $sql = "SELECT t.course_code FROM login AS l, teacher AS t WHERE l.id = t.id AND l.id = '$id'";
             $result = mysqli_query($db, $sql);
             $rowNum = mysqli_num_rows($result);
-
-            echo "  진입2 : " . $rowNum;
 
             // 강좌 목록 추가
             $courseArr = array();
@@ -29,8 +26,6 @@
                 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                 $courseArr[$i] = $row['course_code'];
             }
-
-            echo "  진입3 : " . $courseArr[0];
 
             // 회원 정보 추가
             $sql = "SELECT l.authority, m.profile, l.id, l.password, m.name, m.call_number FROM login AS l, member AS m WHERE l.id = m.id AND l.id = '$id'";
@@ -44,7 +39,9 @@
             $arr['password']    = $row['password'];
             $arr['name']        = $row['name'];
             $arr['courseArr']   = $courseArr;
-            $arr['call']        = $row['call_number'];
+            $arr['call']        = $row['call'];
+
+            echo json_encode($arr);
         } else if($authority == 'student') {
             
             $sql = "SELECT s.course_code FROM login AS l, student AS s WHERE l.id = s.id AND l.id = '$id'";
@@ -70,7 +67,9 @@
             $arr['password']    = $row['password'];
             $arr['name']        = $row['name'];
             $arr['courseArr']   = $courseArr;
-            $arr['call']        = $row['call_number'];
+            $arr['call']        = $row['call'];
+
+            echo json_encode($arr);
         }
      } else echo "정보 없음";
 
