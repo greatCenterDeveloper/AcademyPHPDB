@@ -16,14 +16,18 @@
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC); // 한 줄을 연관 배열로
 
             $studentId = $row['id'];
-            $courseSql = "SELECT s.course_code FROM login AS l, student AS s WHERE l.id = s.id AND s.id = '$studentId'";
+            $courseSql = "SELECT c.course_name
+                            FROM login AS l, student AS s, course AS c
+                            WHERE l.id = s.id
+                            AND s.course_code = c.course_code
+                            AND s.id = '$studentId'";
             $resultCourse = mysqli_query($db, $courseSql);
             $courseRowNum = mysqli_num_rows($resultCourse);
 
             $courseRow = array();
             for($j=0; $j<$courseRowNum; $j++) {
                 $course = mysqli_fetch_array($resultCourse, MYSQLI_ASSOC);
-                $courseRow[$j] = $course['course_code'];
+                $courseRow[$j] = $course['course_name'];
             }
 
             $row['courseArr'] = $courseRow;

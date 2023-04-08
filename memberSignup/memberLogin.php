@@ -16,7 +16,11 @@
         $authority = $row['authority'];
 
         if($authority == 'teacher') {
-            $sql = "SELECT t.course_code FROM login AS l, teacher AS t WHERE l.id = t.id AND l.id = '$id'";
+            $sql = "SELECT t.course_code
+                    FROM login AS l, teacher AS t, course AS c
+                    WHERE l.id = t.id
+                    AND t.course_code = c.course_code
+                    AND l.id = '$id'";
             $result = mysqli_query($db, $sql);
             $rowNum = mysqli_num_rows($result);
 
@@ -39,12 +43,16 @@
             $arr['password']    = $row['password'];
             $arr['name']        = $row['name'];
             $arr['courseArr']   = $courseArr;
-            $arr['call']        = $row['call'];
+            $arr['call']        = $row['call_number'];
 
             echo json_encode($arr);
         } else if($authority == 'student') {
             
-            $sql = "SELECT s.course_code FROM login AS l, student AS s WHERE l.id = s.id AND l.id = '$id'";
+            $sql = "SELECT s.course_code
+                    FROM login AS l, student AS s, course AS c
+                    WHERE l.id = s.id
+                    AND s.course_code = c.course_code
+                    AND l.id = '$id'";
             $result = mysqli_query($db, $sql);
             $rowNum = mysqli_num_rows($result);
 
@@ -67,7 +75,7 @@
             $arr['password']    = $row['password'];
             $arr['name']        = $row['name'];
             $arr['courseArr']   = $courseArr;
-            $arr['call']        = $row['call'];
+            $arr['call']        = $row['call_number'];
 
             echo json_encode($arr);
         }

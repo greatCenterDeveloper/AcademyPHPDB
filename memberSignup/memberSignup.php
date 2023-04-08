@@ -15,7 +15,7 @@
     $password = $_POST['password'];
     $name = $_POST['name'];
     $courseArr = $_POST['courseArr'];
-    $call = $_POST['call'];
+    $call = $_POST['call_number'];
     $now = date('Y-m-d');
     $courseSize = count($courseArr);
 
@@ -35,6 +35,10 @@
         for($i=0; $i<$courseSize; $i++) {
             $memberCourseSql = "INSERT INTO student VALUES('$id', '$courseArr[$i]', '$now')";
             $result = mysqli_query($db, $memberCourseSql);
+            
+            $courseRequestCode = "cr_" . $id . "_" . $courseArr[$i];
+            $courseRequestSql = "INSERT INTO course_request VALUES('$courseRequestCode', '$courseArr[$i]', '$id', '$now')";
+            $result = mysqli_query($db, $courseRequestSql);
         }
     }
     
