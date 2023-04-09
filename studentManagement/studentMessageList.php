@@ -7,7 +7,9 @@
     $studentId = $_POST['studentId'];
     $teacherId = $_POST['teacherId'];
 
-    $sql = "SELECT content AS message, registration AS date FROM message WHERE student_id='$studentId' AND teacher_id='$teacherId'";
+    $sql = "SELECT messages, registration
+            FROM message
+            WHERE student_id='$studentId' AND teacher_id='$teacherId'";
     $result = mysqli_query($db, $sql);
     if($result) {
         $rowNum = mysqli_num_rows($result);
@@ -15,10 +17,12 @@
 
         for($i=0; $i<$rowNum; $i++) {
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            $rows[$i] = $row;
+            $rowTemp = array();
+            $rowTemp['message'] = $row['content'];
+            $rowTemp['date'] = $row['registration'];
+            $rows[$i] = $rowTemp;
         }
 
-        
         echo json_encode($rows);
     } else echo "fail";
     mysqli_close($db);

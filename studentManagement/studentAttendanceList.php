@@ -20,7 +20,7 @@
                             FROM student AS st, teacher AS t
                             WHERE st.course_code = t.course_code
                             AND t.id = '$teacherId')
-            ORDER BY a.registration, a.attendance_academy_time";
+            ORDER BY a.registration DESC, a.attendance_academy_time";
     $result = mysqli_query($db, $sql);
     if($result) {
         $rowNum = mysqli_num_rows($result);
