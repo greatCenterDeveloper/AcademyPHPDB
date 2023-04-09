@@ -4,8 +4,29 @@
     mysqli_query($db, 'set names utf8');
 
     $teacherId = $_GET['teacherId'];
-
-    $sql = "SELECT DISTINCT
+    $name = $_GET['name'];
+    
+    $sql = '';
+    if($name != '') {
+        $sql = "SELECT DISTINCT
+                a.registration,
+                m.name,
+                a.attendance_academy_time,
+                a.the_lower_house_academy_time
+            FROM attendance AS a,
+                 student AS s,
+                 member AS m
+            WHERE a.student_id = s.id
+            AND   s.id = m.id
+            AND   m.name LIKE '%$name%'
+            AND   s.id IN  (SELECT DISTINCT
+                                    st.id
+                            FROM student AS st, teacher AS t
+                            WHERE st.course_code = t.course_code
+                            AND t.id = '$teacherId')
+            ORDER BY a.registration, a.attendance_academy_time";
+    } else {
+        $sql = "SELECT DISTINCT
                 a.registration,
                 m.name,
                 a.attendance_academy_time,
@@ -21,7 +42,10 @@
                             WHERE st.course_code = t.course_code
                             AND t.id = '$teacherId')
             ORDER BY a.registration, a.attendance_academy_time";
+    }
+    
     $result = mysqli_query($db, $sql);
+
     if($result) {
         $rowNum = mysqli_num_rows($result);
 

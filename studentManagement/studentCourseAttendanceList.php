@@ -8,8 +8,8 @@
     $teacherId = $_GET['teacherId'];
 
     $sql = "SELECT cs.day, cs.period,
-                   ca.attendance_day AS attendanceTime,
-                   ca.attendance_state AS attendanceState
+                   ca.attendance_day,
+                   ca.attendance_state
             FROM course AS c,
                 member AS m,
                 student AS s,
@@ -35,7 +35,14 @@
         $rows = array();
         for($i=0; $i<$rowNum; $i++) {
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            $rows[$i] = $row;
+
+            $rowTemp = array();
+            $rowTemp['day'] = $row['day'];
+            $rowTemp['period'] = $row['period'];
+            $rowTemp['attendanceTime'] = $row['attendance_day'];
+            $rowTemp['attendanceState'] = $row['attendance_state'];
+
+            $rows[$i] = $rowTemp;
         }
 
         echo json_encode($rows);

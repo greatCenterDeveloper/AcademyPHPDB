@@ -4,6 +4,12 @@
     mysqli_query($db, 'set names utf8');
 
     $teacherId = $_GET['teacherId'];
+    $startDate = $_GET['startDate'];
+    $endDate = $_GET['endDate'];
+    
+    if($startDate == '') {
+        $startDate = '2000-01-01';
+    }
 
     $sql = "SELECT DISTINCT
                 a.registration,
@@ -15,6 +21,8 @@
                  member AS m
             WHERE a.student_id = s.id
             AND   s.id = m.id
+            AND   a.registration >= '$startDate'
+            AND   a.registration <= '$endDate'
             AND   s.id IN  (SELECT DISTINCT
                                     st.id
                             FROM student AS st, teacher AS t
@@ -22,6 +30,7 @@
                             AND t.id = '$teacherId')
             ORDER BY a.registration, a.attendance_academy_time";
     $result = mysqli_query($db, $sql);
+
     if($result) {
         $rowNum = mysqli_num_rows($result);
 
