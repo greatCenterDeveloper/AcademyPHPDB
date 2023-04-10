@@ -5,7 +5,8 @@
     $db = mysqli_connect('localhost', 'academymrhi', 'a1s2d3f4!', 'academymrhi');
 
     mysqli_query($db, 'set names utf8');
-    // 
+    
+    // @BODY로 넘어온 이름없는 파일로 넘어온 객체 받기
     $data = file_get_contents('php://input');
     $_POST = json_decode($data, true);
 

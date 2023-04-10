@@ -4,6 +4,9 @@
     $db = mysqli_connect('localhost', 'academymrhi', 'a1s2d3f4!', 'academymrhi');
     mysqli_query($db, 'set names utf8');
 
+    $authority = $_GET['authority'];
+    $memberId = $_GET['memberId'];
+
     $sql = "SELECT
                  cs.day,
                  c.course_code,
@@ -49,49 +52,51 @@
             $rowTemp['course'] = $row['course_code'];
             $rowTemp['period'] = $row['period'];
             $rowTemp['room'] = $row['room_num'];
-
-
-            $course = $row['course_code'];
-            $studentSql = "SELECT
-                                l.authority,
-                                m.profile,
-                                m.id,
-                                l.password,
-                                m.name,
-                                m.call_number
-                            FROM login AS l, member AS m, student AS s
-                            WHERE l.id = m.id
-                            AND m.id = s.id
-                            AND s.course_code = '$course'";
-            $studentResult = mysqli_query($db, $studentSql);
-            $studentRowNum = mysqli_num_rows($result);
-
-            $studentRows = array();
-            for($j=0; $j<$studentRowNum; $j++) {
-                $studentRow = mysqli_fetch_array($studentResult, MYSQLI_ASSOC);
-                if($studentRow == null) break;
-
-                $studentId = $studentRow['id'];
-                $courseSql = "SELECT c.course_code
-                                FROM login AS l, student AS s, course AS c
-                                WHERE l.id = s.id
-                                AND s.course_code = c.course_code
-                                AND s.id = '$studentId'";
-                $resultCourse = mysqli_query($db, $courseSql);
-                $courseRowNum = mysqli_num_rows($resultCourse);
-
-                $courseRow = array();
-                for($k=0; $k<$courseRowNum; $k++) {
-                    $course = mysqli_fetch_array($resultCourse, MYSQLI_ASSOC);
-                    if($course == null) break;
-                    $courseRow[$k] = $course['course_code'];
-                }
-
-                $studentRow['courseArr'] = $courseRow;
-                $studentRows[$j] = $studentRow;
-            }
             
-            $rowTemp['studentArr'] = $studentRows;
+            if($authority == 'teacher') {
+                $course = $row['course_code'];
+                $studentSql = "SELECT
+                                    l.authority,
+                                    m.profile,
+                                    m.id,
+                                    l.password,
+                                    m.name,
+                                    m.call_number
+                                FROM login AS l, member AS m, student AS s
+                                WHERE l.id = m.id
+                                AND m.id = s.id
+                                AND s.course_code = '$course'
+                                AND s.course_code IN (SELECT course_code FROM teacher WHERE id = '$memberId')";
+                $studentResult = mysqli_query($db, $studentSql);
+                $studentRowNum = mysqli_num_rows($result);
+
+                $studentRows = array();
+                for($j=0; $j<$studentRowNum; $j++) {
+                    $studentRow = mysqli_fetch_array($studentResult, MYSQLI_ASSOC);
+                    if($studentRow == null) break;
+
+                    $studentId = $studentRow['id'];
+                    $courseSql = "SELECT c.course_code
+                                    FROM login AS l, student AS s, course AS c
+                                    WHERE l.id = s.id
+                                    AND s.course_code = c.course_code
+                                    AND s.id = '$studentId'";
+                    $resultCourse = mysqli_query($db, $courseSql);
+                    $courseRowNum = mysqli_num_rows($resultCourse);
+
+                    $courseRow = array();
+                    for($k=0; $k<$courseRowNum; $k++) {
+                        $course = mysqli_fetch_array($resultCourse, MYSQLI_ASSOC);
+                        if($course == null) break;
+                        $courseRow[$k] = $course['course_code'];
+                    }
+
+                    $studentRow['courseArr'] = $courseRow;
+                    $studentRows[$j] = $studentRow;
+                }
+                
+                $rowTemp['studentArr'] = $studentRows;
+            }
             $rows[$i] = $rowTemp;
         }
 
