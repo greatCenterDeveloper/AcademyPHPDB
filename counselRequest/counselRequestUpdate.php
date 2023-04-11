@@ -23,8 +23,8 @@
             AND counsel_request_code='$counselRequestCode'";
     $result = mysqli_query($db, $sql);
 
-    if($result) echo "상담 신청 완료";
-    else echo "상담 신청 실패. 다시 시도해 주세요.";
+    if($result) echo "상담 신청 수정 완료";
+    else echo "상담 신청 수정 실패. 다시 시도해 주세요.";
 
     mysqli_close($db);
 ?>
