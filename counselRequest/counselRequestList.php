@@ -15,7 +15,11 @@
             FROM
                 counsel_request
             WHERE
-                student_id = '$studentId'";
+                student_id = '$studentId'
+            AND counsel_request_code NOT IN (SELECT
+                                                counsel_request_code
+                                            FROM counsel
+                                            WHERE student_id = '$studentId')";
     $result = mysqli_query($db, $sql);
     if($result) {
         $rowNum = mysqli_num_rows($result);

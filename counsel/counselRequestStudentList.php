@@ -6,6 +6,7 @@
     $teacherId = $_GET['teacherId'];
 
     $sql = "SELECT
+                cr.counsel_request_code AS counselRequestCode,
                 s.id AS studentId,
                 m.name,
                 cr.registration AS date,
@@ -14,14 +15,18 @@
                 cr.counsel_request_end_time AS counselEndTime,
                 cr.counsel_request_content AS counselContent
             FROM counsel_request AS cr,
-                 student AS s,
-                 member AS m
+                student AS s,
+                member AS m
             WHERE cr.student_id = s.id
             AND s.id = m.id
+            AND cr.counsel_request_code NOT IN (SELECT
+                                                    counsel_request_code
+                                                FROM counsel
+                                                WHERE teacher_id = '$teacherId')
             AND s.course_code IN (SELECT
                                     course_code
-                                  FROM teacher
-                                  WHERE id = '$teacherId')";
+                                FROM teacher
+                                WHERE id = '$teacherId')";
 
     $result = mysqli_query($db, $sql);
     if($result) {
