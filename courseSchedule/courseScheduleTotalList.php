@@ -53,8 +53,9 @@
             $rowTemp['period'] = $row['period'];
             $rowTemp['room'] = $row['room_num'];
             
+            $course = $row['course_code'];
+
             if($authority == 'teacher') {
-                $course = $row['course_code'];
                 $studentSql = "SELECT
                                     l.authority,
                                     m.profile,
@@ -96,6 +97,18 @@
                 }
                 
                 $rowTemp['studentArr'] = $studentRows;
+            } else if($authority == 'student') {
+                $courseSql = "SELECT course_code
+                              FROM student
+                              WHERE id='$memberId'
+                              AND course_code='$course'";
+                $resultCourse = mysqli_query($db, $courseSql);
+                $courseRowNum = mysqli_num_rows($resultCourse);
+                $isMyCourse = false;
+                if($courseRowNum == 1) {
+                    $isMyCourse = true;
+                }
+                $rowTemp['isMyCourse'] = $isMyCourse;
             }
             $rows[$i] = $rowTemp;
         }
