@@ -7,6 +7,7 @@
 
     $sql = "SELECT DISTINCT
                 c.counsel_request_code AS counselRequestCode,
+                cr.counsel_request_content AS counselRequestContent,
                 s.id AS studentId,
                 sm.name AS studentName,
                 t.id AS teacherId,
@@ -15,11 +16,13 @@
                 c.counsel_content AS counselContent,
                 c.counsel_code AS counselCode
             FROM counsel AS c,
+                counsel_request AS cr,
                 teacher AS t,
                 member AS tm,
                 student AS s,
                 member AS sm
             WHERE c.teacher_id = t.id
+            AND c.counsel_request_code = cr.counsel_request_code
             AND t.id = tm.id
             AND c.student_id = s.id
             AND s.id = sm.id
