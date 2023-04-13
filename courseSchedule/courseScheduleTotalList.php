@@ -11,7 +11,8 @@
                  cs.day,
                  c.course_code,
                  cs.period,
-                 cr.room_num
+                 cr.room_num,
+                 cs.course_schedule_code
             FROM course AS c,
                  course_assign AS ca,
                  course_room AS cr,
@@ -54,6 +55,8 @@
             $rowTemp['room'] = $row['room_num'];
             
             $course = $row['course_code'];
+
+            $rowTemp['courseScheduleCode'] = $row['course_schedule_code'];
 
             if($authority == 'teacher') {
                 $studentSql = "SELECT
@@ -109,6 +112,29 @@
                     $isMyCourse = true;
                 }
                 $rowTemp['isMyCourse'] = $isMyCourse;
+                
+                
+                $courseScheduleCode = $rowTemp['courseScheduleCode'];
+                $now = date('Y-m-d');
+
+                $scheduleSql = "SELECT
+                                    course_schedule_student_code AS courseScheduleStudentCode,
+                                    course_schedule_content AS courseScheduleContent
+                                FROM course_schedule_student
+                                WHERE student_id = '$memberId'
+                                AND course_schedule_code = '$courseScheduleCode'
+                                AND registration = '$now'";
+                $resultschedule = mysqli_query($db, $scheduleSql);
+
+                if($resultschedule) {
+                    $scheduleRowNum = mysqli_num_rows($resultschedule);
+
+                    if($scheduleRowNum > 0) {
+                        $scheduleRow = mysqli_fetch_array($resultschedule, MYSQLI_ASSOC);
+                        $rowTemp['courseScheduleStudentCode'] = $scheduleRow['courseScheduleStudentCode'];
+                        $rowTemp['courseScheduleContent'] = $scheduleRow['courseScheduleContent'];
+                    }
+                }
             }
             $rows[$i] = $rowTemp;
         }
