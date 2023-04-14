@@ -123,7 +123,7 @@
                                 FROM course_schedule_student
                                 WHERE student_id = '$memberId'
                                 AND course_schedule_code = '$courseScheduleCode'
-                                AND registration = '$now'";
+                                ORDER BY registration DESC LIMIT 1";
                 $resultschedule = mysqli_query($db, $scheduleSql);
 
                 if($resultschedule) {

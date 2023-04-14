@@ -32,7 +32,18 @@
             }
 
             // 회원 정보 추가
-            $sql = "SELECT l.authority, m.profile, l.id, l.password, m.name, m.call_number FROM login AS l, member AS m WHERE l.id = m.id AND l.id = '$id'";
+            $sql = "SELECT
+                        l.authority,
+                        m.profile,
+                        l.id,
+                        l.password,
+                        m.name,
+                        m.call_number
+                    FROM login AS l,
+                        member AS m
+                    WHERE l.id = m.id
+                    AND l.id = '$id'";
+            
             $result = mysqli_query($db, $sql);
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
             
@@ -49,7 +60,9 @@
         } else if($authority == 'student') {
             
             $sql = "SELECT s.course_code
-                    FROM login AS l, student AS s, course AS c
+                    FROM login AS l,
+                        student AS s,
+                        course AS c
                     WHERE l.id = s.id
                     AND s.course_code = c.course_code
                     AND l.id = '$id'";
@@ -64,7 +77,18 @@
             }
 
             // 회원 정보 추가
-            $sql = "SELECT l.authority, m.profile, l.id, l.password, m.name, m.call_number FROM login AS l, member AS m WHERE l.id = m.id AND l.id = '$id'";
+            $sql = "SELECT
+                        l.authority,
+                        m.profile,
+                        l.id,
+                        l.password,
+                        m.name,
+                        m.call_number
+                    FROM login AS l,
+                        member AS m
+                    WHERE l.id = m.id
+                    AND l.id = '$id'";
+            
             $result = mysqli_query($db, $sql);
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
             

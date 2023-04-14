@@ -11,24 +11,12 @@
     $size = $_POST['size'];
     $now = date('Y-m-d');
 
-
-    // $sql = '';
-    // $result = NULL;
-    // if($imageSize > 0) {
-    //     for($i=0; $i<$imageSize; $i++) {
-    //         $sql = "INSERT INTO message
-    //                 (student_id, teacher_id, messages, image, registration)
-    //                 VALUES
-    //                 ('$studentId','$teacherId','$message','$imageArr[$i]','$now')";
-    //         $result = mysqli_query($db, $sql);
-    //     }
-    // } else {
-        $sql = "INSERT INTO message
-                    (student_id, teacher_id, messages, image, registration)
-                VALUES
-                    ('$studentId','$teacherId','$message','$image','$now')";
-        $result = mysqli_query($db, $sql);
-    //}
+    $sql = "INSERT INTO message
+                (student_id, teacher_id, messages, image, registration)
+            VALUES
+                ('$studentId','$teacherId','$message','$image','$now')";
+    
+    $result = mysqli_query($db, $sql);
 
     if($result) {
         if($index == $size) echo "문자 전송 성공";

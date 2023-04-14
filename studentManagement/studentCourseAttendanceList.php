@@ -8,8 +8,9 @@
     $teacherId = $_GET['teacherId'];
 
     $sql = "SELECT cs.day, cs.period,
-                   ca.attendance_day,
-                   ca.attendance_state
+                   ca.attendance_time,
+                   ca.attendance_state,
+                   ca.registration
             FROM course AS c,
                 member AS m,
                 student AS s,
@@ -39,9 +40,9 @@
             $rowTemp = array();
             $rowTemp['day'] = $row['day'];
             $rowTemp['period'] = $row['period'];
-            $rowTemp['attendanceTime'] = $row['attendance_day'];
+            $rowTemp['attendanceTime'] = $row['attendance_time'];
             $rowTemp['attendanceState'] = $row['attendance_state'];
-
+            $rowTemp['attendanceDay'] = $row['registration'];
             $rows[$i] = $rowTemp;
         }
 

@@ -38,7 +38,12 @@
             $result = mysqli_query($db, $memberCourseSql);
             
             $courseRequestCode = "cr_" . $id . "_" . $courseArr[$i];
-            $courseRequestSql = "INSERT INTO course_request VALUES('$courseRequestCode', '$courseArr[$i]', '$id', '$now')";
+            $courseRequestSql = "INSERT INTO course_request
+                                 VALUES('$courseRequestCode',
+                                        '$courseArr[$i]',
+                                        '$id',
+                                        '$now')";
+            
             $result = mysqli_query($db, $courseRequestSql);
         }
     }
