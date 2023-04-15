@@ -19,4 +19,5 @@
         if($index == $size) echo "문자 전송 성공";
     } 
     else echo "문자 전송 실패";
+    mysqli_close($db);
 ?>

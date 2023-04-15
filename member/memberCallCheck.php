@@ -17,4 +17,5 @@
         if($rowNum > 0) echo "이미 사용 중인 휴대폰 번호 입니다.";
         else echo "사용 가능한 휴대폰 번호 입니다.";
     }
+    mysqli_close($db);
 ?>

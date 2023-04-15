@@ -17,4 +17,5 @@
         if($rowNum > 0) echo "이미 사용 중인 아이디 입니다.";
         else echo "사용 가능한 아이디 입니다.";
     }
+    mysqli_close($db);
 ?>
