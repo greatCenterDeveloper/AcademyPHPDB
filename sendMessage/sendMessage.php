@@ -6,7 +6,7 @@
     $studentId = $_POST['studentId'];
     $teacherId = $_POST['teacherId'];
     $message = $_POST['message'];
-    $now = date('Y-m-d');
+    $now = date('Y-m-d H:i:00');
 
     $sql = "INSERT INTO message
                 (student_id, teacher_id, messages, image, registration)

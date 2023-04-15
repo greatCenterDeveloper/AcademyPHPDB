@@ -9,7 +9,7 @@
     $image = $_POST['image'];
     $index = $_POST['index'];
     $size = $_POST['size'];
-    $now = date('Y-m-d');
+    $now = date('Y-m-d H:i:00');
 
     $sql = "INSERT INTO message
                 (student_id, teacher_id, messages, image, registration)

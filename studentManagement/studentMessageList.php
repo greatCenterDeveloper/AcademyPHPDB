@@ -7,7 +7,11 @@
     $studentId = $_POST['studentId'];
     $teacherId = $_POST['teacherId'];
 
-    $sql = "SELECT messages, registration
+    $sql = "SELECT DISTINCT
+                student_id,
+                teacher_id,
+                messages,
+                registration
             FROM message
             WHERE student_id='$studentId' AND teacher_id='$teacherId'";
     $result = mysqli_query($db, $sql);
@@ -18,6 +22,8 @@
         for($i=0; $i<$rowNum; $i++) {
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
             $rowTemp = array();
+            $rowTemp['studentId'] = $row['student_id'];
+            $rowTemp['teacherId'] = $row['teacher_id'];
             $rowTemp['message'] = $row['messages'];
             $rowTemp['date'] = $row['registration'];
             $rows[$i] = $rowTemp;
