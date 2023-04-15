@@ -6,12 +6,15 @@
     $studentId = $_POST['studentId'];
     $teacherId = $_POST['teacherId'];
     $message = $_POST['message'];
+    $image = $_POST['image'];
+    $index = $_POST['index'];
+    $size = $_POST['size'];
     $now = date('Y-m-d');
 
     $sql = "INSERT INTO message
                 (student_id, teacher_id, messages, image, registration)
             VALUES
-                ('$studentId','$teacherId','$message','','$now')";
+                ('$studentId','$teacherId','$message','$image','$now')";
     
     $result = mysqli_query($db, $sql);
 
