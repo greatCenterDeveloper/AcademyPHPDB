@@ -10,14 +10,16 @@
     $sql = "SELECT DISTINCT
                 c.counsel_request_day AS date,
                 m.name,
-                c.counsel_content AS content
+                c.counsel_content AS content,
+                c.registration
             FROM counsel AS c,
                 student AS s,
                 member AS m
             WHERE c.student_id = s.id
             AND s.id = m.id
             AND c.student_id = '$studentId'
-            AND c.teacher_id = '$teacherId'";
+            AND c.teacher_id = '$teacherId'
+            ORDER BY registration DESC";
 
     $result = mysqli_query($db, $sql);
     if($result) {
