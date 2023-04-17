@@ -8,7 +8,10 @@
     $id = $_POST['id'];
     $password = $_POST['password'];
 
-    $sql = "SELECT authority FROM login WHERE id = '$id'";
+    $sql = "SELECT authority
+            FROM login
+            WHERE id = '$id'
+            AND password = '$password'";
 
     $result = mysqli_query($db, $sql);
     if($result) {

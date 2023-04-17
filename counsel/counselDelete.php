@@ -5,6 +5,17 @@
 
     $counselCode = $_GET['counselCode'];
 
+    $sql = "SELECT counsel_request_code FROM counsel WHERE counsel_code='$counselCode'";
+    $result = mysqli_query($db, $sql);
+    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+    $counselRequestCode = $row['counsel_request_code'];
+
+    $sql = "DELETE FROM counsel_request
+            WHERE counsel_request_code='$counselRequestCode'";
+    $result = mysqli_query($db, $sql);
+    
+
     $sql = "DELETE FROM counsel WHERE counsel_code='$counselCode'";
     $result = mysqli_query($db, $sql);
 
