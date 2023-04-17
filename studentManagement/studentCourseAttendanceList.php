@@ -26,7 +26,8 @@
             AND cr.course_code = c.course_code
             AND cr.student_id = s.id
             AND c.course_code = '$courseCode'
-            AND s.id = '$studentId'";
+            AND s.id = '$studentId'
+            ORDER BY ca.registration DESC";
     
     $result = mysqli_query($db, $sql);
 
