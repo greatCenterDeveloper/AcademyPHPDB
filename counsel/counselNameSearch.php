@@ -15,7 +15,8 @@
                 tm.name AS teacherName,
                 c.counsel_request_day AS date,
                 c.counsel_content AS counselContent,
-                c.counsel_code AS counselCode
+                c.counsel_code AS counselCode,
+                c.registration
             FROM counsel AS c,
                 counsel_request AS cr,
                 teacher AS t,
@@ -28,7 +29,8 @@
             AND c.student_id = s.id
             AND s.id = sm.id
             AND t.id = '$teacherId'
-            AND sm.name LIKE '%$name%'";
+            AND sm.name LIKE '%$name%'
+            ORDER BY c.registration DESC";
 
     $result = mysqli_query($db, $sql);
 
