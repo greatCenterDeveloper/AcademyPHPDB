@@ -13,8 +13,11 @@
                 messages,
                 registration
             FROM message
-            WHERE student_id='$studentId' AND teacher_id='$teacherId'";
+            WHERE student_id='$studentId'
+            AND teacher_id='$teacherId'
+            ORDER BY registration DESC";
     $result = mysqli_query($db, $sql);
+
     if($result) {
         $rowNum = mysqli_num_rows($result);
         $rows = array();
