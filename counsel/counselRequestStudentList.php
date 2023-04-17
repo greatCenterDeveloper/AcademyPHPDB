@@ -13,7 +13,8 @@
                 cr.counsel_request_day AS counselDate,
                 cr.counsel_request_start_time AS counselStartTime,
                 cr.counsel_request_end_time AS counselEndTime,
-                cr.counsel_request_content AS counselContent
+                cr.counsel_request_content AS counselContent,
+                cr.registration
             FROM counsel_request AS cr,
                 student AS s,
                 member AS m
@@ -26,7 +27,8 @@
             AND s.course_code IN (SELECT
                                     course_code
                                 FROM teacher
-                                WHERE id = '$teacherId')";
+                                WHERE id = '$teacherId')
+            ORDER BY cr.registration DESC";
 
     $result = mysqli_query($db, $sql);
     if($result) {
