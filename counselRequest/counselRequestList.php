@@ -11,7 +11,8 @@
                 counsel_request_start_time AS startTime,
                 counsel_request_end_time AS endTime,
                 counsel_request_content AS content,
-                student_id AS studentId
+                student_id AS studentId,
+                registration
             FROM
                 counsel_request
             WHERE
@@ -19,7 +20,8 @@
             AND counsel_request_code NOT IN (SELECT
                                                 counsel_request_code
                                             FROM counsel
-                                            WHERE student_id = '$studentId')";
+                                            WHERE student_id = '$studentId')
+            ORDER BY registration DESC";
     $result = mysqli_query($db, $sql);
     if($result) {
         $rowNum = mysqli_num_rows($result);
