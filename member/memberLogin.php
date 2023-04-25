@@ -102,7 +102,7 @@
             $arr['password']    = $row['password'];
             $arr['name']        = $row['name'];
             $arr['courseArr']   = $courseArr;
-            $arr['call']        = $row['call_number'];
+            $arr['call_number']        = $row['call_number'];
 
             echo json_encode($arr);
         }
