@@ -51,13 +51,13 @@
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
             
             $arr = array();
-            $arr['authority']   = $row['authority'];
-            $arr['profile']     = $row['profile'];
-            $arr['id']          = $row['id'];
-            $arr['password']    = $row['password'];
-            $arr['name']        = $row['name'];
-            $arr['courseArr']   = $courseArr;
-            $arr['call']        = $row['call_number'];
+            $arr['authority']       = $row['authority'];
+            $arr['profile']         = $row['profile'];
+            $arr['id']              = $row['id'];
+            $arr['password']        = $row['password'];
+            $arr['name']            = $row['name'];
+            $arr['courseArr']       = $courseArr;
+            $arr['call_number']     = $row['call_number'];
 
             echo json_encode($arr);
         } else if($authority == 'student') {
