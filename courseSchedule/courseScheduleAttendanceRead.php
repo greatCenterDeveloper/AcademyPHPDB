@@ -5,6 +5,7 @@
 
     $courseScheduleCode     = $_POST['courseScheduleCode'];
     $studentId              = $_POST['studentId'];
+    $date                   = $_POST['date'];
 
     $sql = "SELECT
                 ca.course_code 
@@ -38,6 +39,8 @@
                 course_schedule_code = '$courseScheduleCode'
             AND
                 course_request_code  = '$courseRequestCode'
+            AND
+                registration = '$date'
             ORDER BY
                 registration DESC LIMIT 1";
 
