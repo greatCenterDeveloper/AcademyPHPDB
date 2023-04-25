@@ -21,7 +21,7 @@
 
     // 이미 오늘 등원 처리가 된 경우..
     if($rowNum > 0) {
-        echo "이미 등원 처리되었습니다.";
+        echo "이미 등원 처리 되었습니다.";
     } else {
         // 오늘 등원 처리가 되지 않은 경우
         $sql = "INSERT INTO attendance
